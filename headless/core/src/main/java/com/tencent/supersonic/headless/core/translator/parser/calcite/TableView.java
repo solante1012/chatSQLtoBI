@@ -12,7 +12,7 @@ import org.apache.calcite.sql.parser.SqlParserPos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+// 抽象语法树 中间转换结构视图类 ，通过build() 方法生成最终的抽象语法树 SqlNode
 @Data
 public class TableView {
         // 维度 或者 指标 字段

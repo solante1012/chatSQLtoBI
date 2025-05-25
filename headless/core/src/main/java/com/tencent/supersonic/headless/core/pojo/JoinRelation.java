@@ -12,6 +12,6 @@ public class JoinRelation {
     private Long id;
     private String left;
     private String right;
-    private String joinType;
-    private List<Triple<String, String, String>> joinCondition;
+    private String joinType; // // left join, inner join, right join, outer join
+    private List<Triple<String, String, String>> joinCondition;  // (src1_ai_target_rc_date.org_id,=,src1_ai_org.org_id)
 }

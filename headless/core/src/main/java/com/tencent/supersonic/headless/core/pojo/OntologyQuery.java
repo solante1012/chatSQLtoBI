@@ -31,7 +31,7 @@ public class OntologyQuery {
     private List<ColumnOrder> order;
     private boolean nativeQuery = true;
     private AggOption aggOption = AggOption.NATIVE;
-    private String sql;
+    private String sql;  // 最终sql
 
     public Set<ModelResp> getModels() {
         return modelMap.values().stream().collect(Collectors.toSet());

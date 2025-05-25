@@ -1,6 +1,7 @@
 package com.tencent.supersonic.headless.core.translator.parser;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.tencent.supersonic.common.jsqlparser.SqlReplaceHelper;
 import com.tencent.supersonic.common.jsqlparser.SqlSelectFunctionHelper;
@@ -31,6 +32,8 @@ import java.util.stream.Stream;
 /**
  * This parser rewrites S2SQL including conversion from metric/dimension name to bizName and build
  * ontology query in preparation for generation of physical SQL.
+ * 将 metric/dimension name  --》 bizName
+ * 构建 ontologyQuery 为生成 physical SQL 准备
  */
 @Component("SqlQueryParser")
 @Slf4j
@@ -198,7 +201,6 @@ public class SqlQueryParser implements QueryParser {
         OntologyQuery ontologyQuery = new OntologyQuery();
         // TODO 如果多个模型有相同名称的字段，需要考虑包含，不应该不算，目前不支持
         Set<String> fields = Sets.newHashSet(queryFields);
-
         // find belonging model for every querying metrics
         ontology.getMetricMap().entrySet().forEach(entry -> {
             String modelName = entry.getKey();

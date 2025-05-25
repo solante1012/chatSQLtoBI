@@ -407,20 +407,25 @@ public abstract class SemanticNode {
     public static SqlNode optimize(SqlValidatorScope scope, S2CalciteSchema schema, SqlNode sqlNode,
             EngineType engineType) {
         try {
+            // 构建优化规则集
             HepProgramBuilder hepProgramBuilder = new HepProgramBuilder();
             SemanticSqlDialect sqlDialect = SqlDialectFactory.getSqlDialect(engineType);
             hepProgramBuilder.addRuleInstance(
                     new FilterToGroupScanRule(FilterToGroupScanRule.DEFAULT, schema));
+            // 执行器
             RelOptPlanner relOptPlanner = new HepPlanner(hepProgramBuilder.build());
+            // 将优化后的逻辑关系表达式（RelNode）转换回 SQL 语句
             RelToSqlConverter converter = new RelToSqlConverter(sqlDialect);
             SqlValidator sqlValidator = Configuration.getSqlValidator(
                     scope.getValidator().getCatalogReader().getRootSchema(), engineType);
+            // 用于将 SQL 节点转换为逻辑关系表达式（RelNode）。
             SqlToRelConverter sqlToRelConverter = Configuration.getSqlToRelConverter(scope,
                     sqlValidator, relOptPlanner, engineType);
             RelNode sqlRel =
                     sqlToRelConverter.convertQuery(sqlValidator.validate(sqlNode), false, true).rel;
             log.debug("RelNode optimize {}",
                     SemanticNode.getSql(converter.visitRoot(sqlRel).asStatement(), engineType));
+            // 设置优化器的根节点为当前逻辑计划
             relOptPlanner.setRoot(sqlRel);
             RelNode relNode = relOptPlanner.findBestExp();
             return converter.visitRoot(relNode).asStatement();

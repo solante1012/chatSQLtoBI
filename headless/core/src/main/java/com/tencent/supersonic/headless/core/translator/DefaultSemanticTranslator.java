@@ -30,12 +30,12 @@ public class DefaultSemanticTranslator implements SemanticTranslator {
         }
         //    com.tencent.supersonic.headless.core.translator.parser.SqlVariableParser,\
         //    com.tencent.supersonic.headless.core.translator.parser.StructQueryParser,\
-        //    com.tencent.supersonic.headless.core.translator.parser.SqlQueryParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.SqlQueryParser （重要）,\
         //    com.tencent.supersonic.headless.core.translator.parser.DefaultDimValueParser,\
         //    com.tencent.supersonic.headless.core.translator.parser.DimExpressionParser,\
         //    com.tencent.supersonic.headless.core.translator.parser.MetricExpressionParser,\
         //    com.tencent.supersonic.headless.core.translator.parser.MetricRatioParser,\
-        //    com.tencent.supersonic.headless.core.translator.parser.OntologyQueryParser
+        //    com.tencent.supersonic.headless.core.translator.parser.OntologyQueryParser（重要）
         for (QueryParser parser : ComponentFactory.getQueryParsers()) {
             if (parser.accept(queryStatement)) {
                 log.debug("QueryConverter accept [{}]", parser.getClass().getName());
@@ -45,6 +45,7 @@ public class DefaultSemanticTranslator implements SemanticTranslator {
                 }
             }
         }
+        // 生成最终sql  将原先的 s2sql(bizName) 的from 表名替换为 真正查询表
         mergeOntologyQuery(queryStatement);
 
         if (StringUtils.isNotBlank(queryStatement.getSqlQuery().getSimplifiedSql())) {
@@ -53,7 +54,8 @@ public class DefaultSemanticTranslator implements SemanticTranslator {
         if (StringUtils.isBlank(queryStatement.getSql())) {
             throw new RuntimeException("parse exception: " + queryStatement.getErrMsg());
         }
-
+//    com.tencent.supersonic.headless.core.translator.optimizer.DbDialectOptimizer,\
+//    com.tencent.supersonic.headless.core.translator.optimizer.ResultLimitOptimizer
         for (QueryOptimizer optimizer : ComponentFactory.getQueryOptimizers()) {
             if (optimizer.accept(queryStatement)) {
                 optimizer.rewrite(queryStatement);

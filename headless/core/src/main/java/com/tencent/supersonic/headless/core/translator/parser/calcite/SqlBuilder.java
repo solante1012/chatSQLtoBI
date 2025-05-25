@@ -157,7 +157,7 @@ public class SqlBuilder {
 
         return parserNode;
     }
-
+    // 构造真实sql
     private TableView render(OntologyQuery ontologyQuery, Set<ModelResp> dataModels,
             SqlValidatorScope scope, S2CalciteSchema schema) throws Exception {
         SqlNode left = null;
@@ -209,21 +209,24 @@ public class SqlBuilder {
     private SqlNode getTable(TableView tableView) {
         return SemanticNode.getTable(tableView.getTable());
     }
-
+    //  构造join sqlNode
     private SqlNode buildJoin(SqlNode leftNode, TableView leftTable, TableView rightTable,
             Map<String, String> before, ModelResp dataModel, S2CalciteSchema schema,
             SqlValidatorScope scope) throws Exception {
         EngineType engineType = EngineType.fromString(schema.getOntology().getDatabase().getType());
+        //根据 table sql 自动生成的连接条件节点（如 a.id = b.a_id）
         SqlNode condition =
                 getCondition(leftTable, rightTable, dataModel, schema, scope, engineType);
         SqlLiteral sqlLiteral = SemanticNode.getJoinSqlLiteral("");
+        //功能：查找是否有显式的 JOIN 关系定义（来自 s2schema 中的 joinRelations）。
+        //返回值：匹配的 JoinRelation 对象，包含具体的连接类型（如 LEFT JOIN）和连接条件。
         JoinRelation matchJoinRelation = getMatchJoinRelation(before, rightTable, schema);
         SqlNode joinRelationCondition;
         if (!org.apache.commons.collections.CollectionUtils
                 .isEmpty(matchJoinRelation.getJoinCondition())) {
-            sqlLiteral = SemanticNode.getJoinSqlLiteral(matchJoinRelation.getJoinType());
+            sqlLiteral = SemanticNode.getJoinSqlLiteral(matchJoinRelation.getJoinType()); // 设置 JOIN 类型（如 LEFT JOIN、INNER JOIN）
             joinRelationCondition = getCondition(matchJoinRelation, scope, engineType);
-            condition = joinRelationCondition;
+            condition = joinRelationCondition; // 替换掉之前自动推导出的连接条件。
         }
 
         return new SqlJoin(SqlParserPos.ZERO, leftNode,
