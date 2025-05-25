@@ -21,7 +21,7 @@ public class ModelConfigHelper {
                 return false;
             }
             ChatLanguageModel chatLanguageModel = ModelProvider.getChatModel(modelConfig);
-            String response = chatLanguageModel.generate("Hi there");
+            String response = chatLanguageModel.generate("9.9和9.11谁大");
             return StringUtils.isNotEmpty(response) ? true : false;
         } catch (Exception e) {
             log.warn("connect to llm failed:", e);

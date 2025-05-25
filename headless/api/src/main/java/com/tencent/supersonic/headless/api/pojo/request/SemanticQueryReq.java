@@ -30,7 +30,7 @@ public abstract class SemanticQueryReq {
     protected List<Param> params = new ArrayList<>();
 
     protected Cache cacheInfo = new Cache();
-
+    // s2sql --> correct s2sql --> sql 周期
     protected SqlInfo sqlInfo = new SqlInfo();
 
     public void addModelId(Long modelId) {

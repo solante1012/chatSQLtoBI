@@ -34,6 +34,7 @@ public abstract class SingleMatchStrategy<T extends MapResult> extends BaseMatch
                 int offset = mapperHelper.getStepOffset(terms, startIndex);
                 index = mapperHelper.getStepIndex(regOffsetToLength, index);
                 if (index <= text.length()) {
+                    // 按分词器的步长进行截取的段 detectSegment，匹配自定义词典的前缀树
                     String detectSegment = text.substring(startIndex, index).trim();
                     Callable<Void> task = createTask(chatQueryContext, detectDataSetIds,
                             detectSegment, offset, results);

@@ -1,6 +1,8 @@
 package com.tencent.supersonic.common.pojo.enums;
 
-/** Enumerate query types supported by SuperSonic. */
+/** Enumerate query types supported by SuperSonic.
+ *  图标类型
+ * */
 public enum QueryType {
     /** queries with aggregation (optionally slice and dice by dimensions) */
     AGGREGATE,

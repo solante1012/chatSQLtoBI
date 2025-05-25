@@ -418,6 +418,13 @@ public class ModelServiceImpl implements ModelService {
         return getModelList(modelFilter);
     }
 
+    /**
+     * 访问权限控制
+     * @param user
+     * @param domainId
+     * @param authTypeEnum    VIEWER, ADMIN
+     * @return
+     */
     @Override
     public List<ModelResp> getModelAuthList(User user, Long domainId, AuthType authTypeEnum) {
         ModelFilter modelFilter = new ModelFilter();

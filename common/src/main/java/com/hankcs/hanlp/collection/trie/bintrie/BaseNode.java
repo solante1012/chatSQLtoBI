@@ -17,6 +17,9 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * 前缀树节点
+ */
 @Slf4j
 public abstract class BaseNode<V> implements Comparable<BaseNode> {
 
@@ -34,7 +37,7 @@ public abstract class BaseNode<V> implements Comparable<BaseNode> {
      */
     protected Status status;
     /**
-     * 节点代表的字符
+     * 节点代表的字符  （单个子母）
      */
     protected char c;
     /**

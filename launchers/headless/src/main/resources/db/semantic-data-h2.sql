@@ -1109,3 +1109,87 @@ INSERT INTO s2_stay_time_statis (imp_date, user_name, stay_hours, page) VALUES (
 INSERT INTO s2_stay_time_statis (imp_date, user_name, stay_hours, page) VALUES (DATEADD('DAY', -19, CURRENT_DATE()), 'alice', '0.8131712486302015', 'p2');
 INSERT INTO s2_stay_time_statis (imp_date, user_name, stay_hours, page) VALUES (DATEADD('DAY', -15, CURRENT_DATE()), 'lucy', '0.8124302447925607', 'p4');
 INSERT INTO s2_stay_time_statis (imp_date, user_name, stay_hours, page) VALUES (DATEADD('DAY', -8, CURRENT_DATE()), 'lucy', '0.039935860913407284', 'p2');
+
+
+
+
+
+INSERT INTO `ai_org` VALUES (10, '中国联合网络通信集团有限公司', '全集团', '集团', NULL);
+INSERT INTO `ai_org` VALUES (20, '中国联通总部管理部门', '总部', '总部', NULL);
+INSERT INTO `ai_org` VALUES (30, '北京市分公司', '北京', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (40, '天津市分公司', '天津', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (50, '河北省分公司', '河北', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (60, '山东省分公司', '山东', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (70, '河南省分公司', '河南', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (80, '辽宁省分公司', '辽宁', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (90, '山西省分公司', '山西', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (100, '内蒙古自治区分公司', '内蒙古', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (110, '吉林省分公司', '吉林', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (120, '黑龙江省分公司', '黑龙江', '省分,北10省', NULL);
+INSERT INTO `ai_org` VALUES (130, '广东省分公司', '广东', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (140, '上海市分公司', '上海', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (150, '贵州省分公司', '贵州', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (160, '云南省分公司', '云南', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (170, '西藏自治区分公司', '西藏', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (180, '甘肃省分公司', '甘肃', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (190, '青海省分公司', '青海', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (200, '宁夏回族自治区分公司', '宁夏', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (210, '新疆维吾尔自治区分公司', '新疆', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (220, '江苏省分公司', '江苏', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (230, '浙江省分公司', '浙江', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (240, '广西壮族自治区分公司', '广西', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (250, '海南省分公司', '海南', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (260, '四川省分公司', '四川', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (270, '重庆市分公司', '重庆', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (280, '陕西省分公司', '陕西', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (290, '湖南省分公司', '湖南', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (300, '湖北省分公司', '湖北', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (310, '安徽省分公司', '安徽', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (320, '福建省分公司', '福建', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (330, '江西省分公司', '江西', '省分,南21省', NULL);
+INSERT INTO `ai_org` VALUES (340, '联通数字科技有限公司', '数科', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (350, '联通在线信息科技有限公司', '在线', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (360, '中讯邮电咨询设计院有限公司', '中讯', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (370, '联通华盛通信有限公司', '华盛', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (380, '京都信苑饭店', '京都信苑饭店', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (390, '中国联通研究院', '软研院', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (400, '联通支付有限公司', '支付公司', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (410, '联通创新创业投资有限公司', '创投公司', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (420, '联通智网科技股份有限公司', '智网科技', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (430, '联通数据智能有限公司（中国联通数据科学与人工智能研究院）', '数智', '子公司', '联通数据智能有限公司');
+INSERT INTO `ai_org` VALUES (440, '云宙时代科技有限公司', '云宙时代', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (450, '联通软件研究院', '软研院', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (460, '联通集团财务有限公司', '财务公司', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (470, '联通资产运营有限公司', '资产公司', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (480, '联通党校（联通人才发展中心）', '联通党校', '子公司', '联通党校');
+INSERT INTO `ai_org` VALUES (490, '联通融资租赁有限公司', '融资租赁', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (500, '联通智能城市研究院', '智研院', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (510, '网络运营事业部', '网络运营事业部', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (520, '中国联通（香港）创新研究院有限公司', '中国联通（香港）创新研究院有限公司', '子公司', NULL);
+INSERT INTO `ai_org` VALUES (530, '中国联通国际有限公司', '国际公司', '子公司', NULL);
+
+
+
+
+INSERT INTO `ai_report` VALUES (4001, '人才强企各指标月报', 'ai_target_rc_date', '科技人才总表', '科技人才数量,青年科技人才数量');
+INSERT INTO `ai_report` VALUES (4002, '人才强企各指标月报', 'ai_target_rc_date', '科技创新领域人员总表', '科技创新领域人员占比');
+INSERT INTO `ai_report` VALUES (5001, '产互还原月报', 'ai_target_yg_date', '全集团人员数量情况', '全口径用工总量,全口径用工总量较上年底增减变化,全口径用工总量较上月底增减变化,从业人员数量,从业人员数量较上年底增减变化,从业人员数量较上月底增减变化,合同制数量,派遣制数量');
+
+
+
+INSERT INTO `ai_target_yg_date` VALUES (1, '2024年12月', '10', '101', '全口径用工总量', 1000.0000);
+INSERT INTO `ai_target_yg_date` VALUES (2, '2024年12月', '20', '101', '全口径用工总量', 100.0000);
+INSERT INTO `ai_target_yg_date` VALUES (3, '2024年12月', '30', '101', '全口径用工总量', 200.0000);
+INSERT INTO `ai_target_yg_date` VALUES (4, '2024年12月', '40', '101', '全口径用工总量', 300.0000);
+
+
+
+
+INSERT INTO `ai_target_rc_date` VALUES (1, '2024年12月', '10', '101', '科技人才数量', 1000.0000);
+INSERT INTO `ai_target_rc_date` VALUES (2, '2024年12月', '20', '101', '科技人才数量', 100.0000);
+INSERT INTO `ai_target_rc_date` VALUES (3, '2024年12月', '30', '101', '科技人才数量', 200.0000);
+INSERT INTO `ai_target_rc_date` VALUES (4, '2024年12月', '40', '101', '科技人才数量', 300.0000);
+INSERT INTO `ai_target_rc_date` VALUES (5, '2024年12月', '10', '101', '青年科技人才数量', 500.0000);
+INSERT INTO `ai_target_rc_date` VALUES (6, '2024年12月', '20', '101', '青年科技人才数量', 50.0000);
+INSERT INTO `ai_target_rc_date` VALUES (7, '2024年12月', '30', '101', '青年科技人才数量', 100.0000);
+INSERT INTO `ai_target_rc_date` VALUES (8, '2024年12月', '40', '101', '青年科技人才数量', 200.0000);

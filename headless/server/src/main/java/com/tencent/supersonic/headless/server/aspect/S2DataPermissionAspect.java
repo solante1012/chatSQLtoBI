@@ -97,6 +97,7 @@ public class S2DataPermissionAspect {
         }
 
         SemanticSchemaResp semanticSchemaResp = getSemanticSchemaResp(queryReq);
+        // 权限控制，通过 s2sql 拿到的模型是否有权限
         Set<Long> modelIds = getModelIdInQuery(queryReq, semanticSchemaResp);
 
         // 2. determine whether admin of the model

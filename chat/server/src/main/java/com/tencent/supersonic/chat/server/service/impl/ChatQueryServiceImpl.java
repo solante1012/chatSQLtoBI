@@ -93,20 +93,25 @@ public class ChatQueryServiceImpl implements ChatQueryService {
             queryId = chatManageService.createChatQuery(chatParseReq);
             chatParseReq.setQueryId(queryId);
         }
-
+        // 上下文中包含了请求、返回、agent
         ParseContext parseContext = buildParseContext(chatParseReq, new ChatParseResp(queryId));
+        // 通过 SPI 插件获取解析器 NL2PluginParser NL2SQLParser  PlainTextParser
         for (ChatQueryParser parser : chatQueryParsers) {
             if (parser.accept(parseContext)) {
                 parser.parse(parseContext);
             }
         }
-
+        // 通过 SPI 插件获取解析结果器
+//        com.tencent.supersonic.chat.server.processor.parse.QueryRecommendProcessor,\
+//        com.tencent.supersonic.chat.server.processor.parse.TimeCostCalcProcessor,\
+//        com.tencent.supersonic.chat.server.processor.parse.ErrorMsgRewriteProcessor,\
+//        com.tencent.supersonic.chat.server.processor.parse.ParseInfoFormatProcessor
         for (ParseResultProcessor processor : parseResultProcessors) {
             if (processor.accept(parseContext)) {
                 processor.process(parseContext);
             }
         }
-
+        // 从 parseContext.getResponse() 获取解析结果 ，存储
         if (!parseContext.needFeedback()) {
             chatManageService.batchAddParse(chatParseReq, parseContext.getResponse());
             chatManageService.updateParseCostTime(parseContext.getResponse());

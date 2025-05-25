@@ -7,6 +7,16 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * 构造 DictWord  有以下实现；
+ *
+ * DataSetWordBuilder
+ * MetricWordBuilder  包含反转词
+ * DimensionWordBuilder  包含反转词
+ * TermWordBuilder   包含反转词
+ * ValueWordBuilder
+ */
 public abstract class BaseWordWithAliasBuilder extends BaseWordBuilder {
 
     public abstract DictWord getOneWordNature(String word, SchemaElement schemaElement,

@@ -10,10 +10,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SchemaElementMatch implements Serializable {
+    // 配匹到的语义元素
     private SchemaElement element;
     private double offset;
     private double similarity;
+    // 原始词
     private String detectWord;
+    // 匹配到的词
     private String word;
     private Long frequency;
     private boolean isInherited;

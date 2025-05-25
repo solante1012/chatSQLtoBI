@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+// 从语义请求 SemanticQueryReq --》 SemanticSchemaResp
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,9 +22,13 @@ public class SemanticSchemaResp {
     private SchemaType schemaType;
     private List<MetricSchemaResp> metrics = Lists.newArrayList();
     private List<DimSchemaResp> dimensions = Lists.newArrayList();
+    // 关联关系
     private List<ModelRela> modelRelas = Lists.newArrayList();
+    // 相关模型
     private List<ModelResp> modelResps = Lists.newArrayList();
+    // 相关数据集信息
     private DataSetResp dataSetResp;
+    // 相关数据库信息
     private DatabaseResp databaseResp;
     private QueryType queryType;
 

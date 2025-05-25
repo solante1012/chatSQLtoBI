@@ -77,6 +77,7 @@ public class NL2SQLParser implements ChatQueryParser {
         return parseContext.enableNL2SQL();
     }
 
+    // 核心处理入口
     @Override
     public void parse(ParseContext parseContext) {
         // first go with rule-based parsers unless the user has already selected one parse.
@@ -89,6 +90,8 @@ public class NL2SQLParser implements ChatQueryParser {
 
             // for every requested dataSet, recursively invoke rule-based parser with different
             // mapModes
+            // 通过 S2SemanticLayerService 拿到 ChatParseResp.selectedParses
+            // 匹配了多个数据集，会生成多个解析结果  List<SemanticParseInfo> candidateParses
             Set<Long> requestedDatasets = queryNLReq.getDataSetIds();
             List<SemanticParseInfo> candidateParses = Lists.newArrayList();
             StringBuilder errMsg = new StringBuilder();
@@ -100,7 +103,7 @@ public class NL2SQLParser implements ChatQueryParser {
                     queryNLReq.setMapModeEnum(mode);
                     doParse(queryNLReq, parseResp);
                 }
-
+                // 严格匹配找不到会从向量库中找
                 if (parseResp.getSelectedParses().isEmpty() && candidateParses.isEmpty()) {
                     queryNLReq.setMapModeEnum(MapModeEnum.LOOSE);
                     doParse(queryNLReq, parseResp);
@@ -127,6 +130,8 @@ public class NL2SQLParser implements ChatQueryParser {
         }
 
         // next go with llm-based parsers unless LLM is disabled or use feedback is needed.
+        // needLLMParse ： 启用大模型（默认启用） 且 （请求中没有选择 SemanticParseInfo  或者 响应中有 SemanticParseInfo ）
+        // needFeedback ： 开启用户确认 且 请求中没有选择 SemanticParseInfo 且 响应中有多个 SemanticParseInfo
         if (parseContext.needLLMParse() && !parseContext.needFeedback()) {
             // either the user or the system selects one parse from the candidate parses.
             if (Objects.isNull(parseContext.getRequest().getSelectedParse())
@@ -164,7 +169,7 @@ public class NL2SQLParser implements ChatQueryParser {
         resp.setParseTimeCost(parseResp.getParseTimeCost());
         resp.setErrorMsg(parseResp.getErrorMsg());
     }
-
+    // 多轮对话改写  通过大模型根据历史对话来改写本轮对话
     private void rewriteMultiTurn(ParseContext parseContext, QueryNLReq queryNLReq) {
         ChatApp chatApp = parseContext.getAgent().getChatAppConfig().get(APP_KEY_MULTI_TURN);
         if (Objects.isNull(chatApp) || !chatApp.isEnable()) {

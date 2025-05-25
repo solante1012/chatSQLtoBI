@@ -123,6 +123,7 @@ public abstract class BaseMapper implements SchemaMapper {
 
     public <T> List<T> getMatches(ChatQueryContext chatQueryContext, MatchStrategy matchStrategy) {
         String queryText = chatQueryContext.getRequest().getQueryText();
+        // 对输入文本进行分词，过滤出带有特定词性前缀的术语（如指标、维度），并转换为 API 所需的 S2Term 结构
         List<S2Term> terms =
                 HanlpHelper.getTerms(queryText, chatQueryContext.getModelIdToDataSetIds());
         terms = HanlpHelper.getTerms(terms, chatQueryContext.getRequest().getDataSetIds());

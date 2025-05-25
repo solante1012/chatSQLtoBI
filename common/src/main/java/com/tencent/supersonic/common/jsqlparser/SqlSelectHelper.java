@@ -282,6 +282,7 @@ public class SqlSelectHelper {
     }
 
     public static List<String> getAllSelectFields(String sql) {
+        // 使用 jsqlparser 解析 sql  拿到所有父子子查询语句 （每个查询的 where from group by  select 等）
         List<PlainSelect> plainSelects = getPlainSelects(getPlainSelect(sql));
         Set<String> results = new HashSet<>();
         Set<String> aliases = new HashSet<>();

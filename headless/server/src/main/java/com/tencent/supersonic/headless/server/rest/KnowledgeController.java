@@ -164,7 +164,7 @@ public class KnowledgeController {
     }
 
     /**
-     * queryDictValue-返回字典的数据
+     * queryDictValue-返回字典的数据  纬度值列表
      *
      * @param dictValueReq
      */

@@ -125,13 +125,14 @@ export const layout: RunTimeLayoutConfig = (params) => {
     logo: (
       <Space>
         <S2Icon
-          icon={ICON.iconlogobiaoshi}
+          icon={ICON.iconliantong}
           size={30}
           color="#1672fa"
           style={{ display: 'inline-block', marginTop: 8 }}
         />
+        {/*<img src='/logo.svg'/>*/}
         <div className="logo" style={{ position: 'relative', top: '-2px' }}>
-          SuperSonic
+          联通西部创新研究院
         </div>
       </Space>
     ),

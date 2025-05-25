@@ -72,9 +72,10 @@ public class DataModelNode extends SemanticNode {
         addSchema(scope, dataModel, sqlTable);
         return buildAs(dataModel.getName(), source);
     }
-
+    // 挂在到抽象语法 rooSchema上
     private static void addSchema(SqlValidatorScope scope, ModelResp datasource, String table)
             throws Exception {
+        // <table ,  fields>
         Map<String, Set<String>> sqlTable = SqlSelectHelper.getFieldsWithSubQuery(table);
         for (Map.Entry<String, Set<String>> entry : sqlTable.entrySet()) {
             String tb = entry.getKey();
@@ -114,6 +115,7 @@ public class DataModelNode extends SemanticNode {
                 metrics.add(m.getName());
             }
         }
+        // 增加维度中没有的字段
         for (String field : fields) {
             if (!metrics.contains(field) && !dimensions.contains(field)) {
                 dimensions.add(field);
@@ -137,6 +139,7 @@ public class DataModelNode extends SemanticNode {
         return sqlNodeList;
     }
 
+    //
     private static SqlNode getTable(String sqlQuery, SqlValidatorScope scope, EngineType engineType)
             throws Exception {
         SqlParser sqlParser = SqlParser.create(sqlQuery, Configuration.getParserConfig(engineType));

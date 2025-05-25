@@ -35,6 +35,7 @@ public class EmbeddingRecallRecognizer extends PluginRecognizer {
         if (CollectionUtils.isEmpty(embeddingRetrievals)) {
             return null;
         }
+        // 使用第三方工具扩展功能。给定一个包含描述和示例问题的已配置插件列表，LLM会选择最合适的插件。
         List<ChatPlugin> plugins = getPluginList(parseContext);
         Map<Long, ChatPlugin> pluginMap =
                 plugins.stream().collect(Collectors.toMap(ChatPlugin::getId, p -> p));

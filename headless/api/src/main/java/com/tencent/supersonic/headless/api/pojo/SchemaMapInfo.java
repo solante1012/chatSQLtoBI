@@ -15,6 +15,7 @@ import java.util.Set;
 @Getter
 public class SchemaMapInfo implements Serializable {
 
+    // <dataSetId,  匹配的语义模型对象列表 >
     private final Map<Long, List<SchemaElementMatch>> dataSetElementMatches = new HashMap<>();
 
     public boolean isEmpty() {

@@ -10,9 +10,9 @@ import java.util.Objects;
 @ToString
 @Builder
 public class MatchText {
-
+    // 分词器 截取前半截
     private String regText;
-
+    // 分词器 截取后半截
     private String detectSegment;
 
     @Override

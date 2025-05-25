@@ -47,7 +47,7 @@ public class SqlExecutor implements ChatQueryExecutor {
                                 JsonUtil.toString(executeContext.getParseInfo().getProperties()
                                         .get(Text2SQLExemplar.PROPERTY_KEY)),
                                 Text2SQLExemplar.class);
-
+                // 封装可以调用的历史查询轨迹，以方便少镜头提示，提高系统理解类似查询的能力。
                 MemoryService memoryService = ContextUtils.getBean(MemoryService.class);
                 memoryService.createMemory(ChatMemory.builder().queryId(queryResult.getQueryId())
                         .agentId(executeContext.getAgent().getId()).status(MemoryStatus.PENDING)

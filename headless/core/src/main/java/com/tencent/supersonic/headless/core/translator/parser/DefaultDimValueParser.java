@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * This parser appends default dimension values (if configured) to the where statement.
+ * 维度的默认值不为空，自动添加到 where 后面
  */
 @Slf4j
 @Component("DefaultDimValueParser")

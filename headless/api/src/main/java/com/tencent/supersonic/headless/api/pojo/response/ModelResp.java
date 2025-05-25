@@ -27,7 +27,7 @@ public class ModelResp extends SchemaItem {
 
     private Long tagObjectId;
 
-    private ModelDetail modelDetail;
+    private ModelDetail modelDetail;  // 模型详情
 
     private String depends;
 

@@ -28,6 +28,14 @@ public class DefaultSemanticTranslator implements SemanticTranslator {
         if (queryStatement.isTranslated()) {
             return;
         }
+        //    com.tencent.supersonic.headless.core.translator.parser.SqlVariableParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.StructQueryParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.SqlQueryParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.DefaultDimValueParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.DimExpressionParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.MetricExpressionParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.MetricRatioParser,\
+        //    com.tencent.supersonic.headless.core.translator.parser.OntologyQueryParser
         for (QueryParser parser : ComponentFactory.getQueryParsers()) {
             if (parser.accept(queryStatement)) {
                 log.debug("QueryConverter accept [{}]", parser.getClass().getName());

@@ -121,7 +121,7 @@ public class CoreDictionary {
             if (byteArray == null) {
                 return false;
             }
-            int size = byteArray.nextInt();
+            int size = byteArray.nextInt();  // 第一个 INT 是词条个数 ， 每个词条是一个 Attribute，有多个 Nature
             Attribute[] attributes = new Attribute[size];
             final Nature[] natureIndexArray = Nature.values();
             for (int i = 0; i < size; ++i) {

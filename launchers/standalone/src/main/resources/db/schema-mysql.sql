@@ -545,3 +545,5 @@ CREATE TABLE IF NOT EXISTS `s2_user_token` (
     unique key name_username (`name`, `user_name`),
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  comment='用户令牌信息表';
+
+

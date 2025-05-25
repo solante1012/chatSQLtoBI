@@ -12,6 +12,13 @@ import java.util.List;
 public class HanlpMapResult extends MapResult {
     private List<String> natures;
 
+    /**
+     *
+     * @param name   匹配到的词 文本
+     * @param natures 词性列表
+     * @param detectWord  拿来匹配的 字符串
+     * @param similarity  相似度
+     */
     public HanlpMapResult(String name, List<String> natures, String detectWord, double similarity) {
         this.name = name;
         this.natures = natures;

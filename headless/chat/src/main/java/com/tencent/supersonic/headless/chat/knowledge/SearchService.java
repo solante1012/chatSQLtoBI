@@ -26,10 +26,14 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+/**
+ * 辅助自定义词典，进行推荐搜索
+ */
 @Slf4j
 public class SearchService {
 
     public static final int SEARCH_SIZE = 200;
+    // 一个高效前缀树（Trie）实现类  它适用于中文、英文混合文本的前缀匹配和词典构建。  支持插入键值对（key: String, value: V），并支持根据前缀进行搜索。
     private static BinTrie<List<String>> trie;
     private static BinTrie<List<String>> suffixTrie;
 
@@ -54,6 +58,7 @@ public class SearchService {
             Set<Long> detectDataSetIds) {
         Set<Long> modelIdOrDataSetIds =
                 findModelIdOrDataSetIds(modelIdToDataSetIds, detectDataSetIds);
+        // < 匹配txt, List<nature>  >
         Set<Map.Entry<String, List<String>>> result = search(key, binTrie, modelIdOrDataSetIds);
         List<HanlpMapResult> hanlpMapResults = result.stream().map(entry -> {
             String name = entry.getKey().replace("#", " ");

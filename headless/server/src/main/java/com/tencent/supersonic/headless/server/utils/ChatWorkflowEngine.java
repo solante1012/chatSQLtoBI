@@ -34,12 +34,21 @@ public class ChatWorkflowEngine {
     private final List<SemanticCorrector> semanticCorrectors =
             CoreComponentFactory.getSemanticCorrectors();
 
+    // 核心工作流入口
     public void start(ChatWorkflowState initialState, ChatQueryContext queryCtx) {
         ParseResp parseResult = queryCtx.getParseResp();
         queryCtx.setChatWorkflowState(initialState);
         while (queryCtx.getChatWorkflowState() != ChatWorkflowState.FINISHED) {
             switch (queryCtx.getChatWorkflowState()) {
+                // Schema 映射  通过将查询文本与知识库匹配来识别对用户查询中模式元素（指标、维度、实体、值）
+                // 系统识别对自然语言查询中模式元素的引用，将术语映射到模型、维度、指标和值。
                 case MAPPING:
+                    //    com.tencent.supersonic.headless.chat.mapper.EmbeddingMapper, \
+                    //    com.tencent.supersonic.headless.chat.mapper.KeywordMapper, \
+                    //    com.tencent.supersonic.headless.chat.mapper.QueryFilterMapper, \
+                    //    com.tencent.supersonic.headless.chat.mapper.PartitionTimeMapper,\
+                    //    com.tencent.supersonic.headless.chat.mapper.TermDescMapper,\
+                    //    com.tencent.supersonic.headless.chat.mapper.AllFieldMapper
                     performMapping(queryCtx);
                     if (queryCtx.getMapInfo().isEmpty()) {
                         parseResult.setState(ParseResp.ParseState.FAILED);
@@ -50,6 +59,11 @@ public class ChatWorkflowEngine {
                         queryCtx.setChatWorkflowState(ChatWorkflowState.PARSING);
                     }
                     break;
+                    // 解析 理解用户查询并生成语义查询语句（S2SQL）
+                // 基于映射的模式元素和查询意图，系统生成结构化语义查询表示（S2SQL）。
+//                com.tencent.supersonic.headless.chat.parser.llm.LLMSqlParser,\
+//                com.tencent.supersonic.headless.chat.parser.rule.RuleSqlParser,\
+//                com.tencent.supersonic.headless.chat.parser.QueryTypeParser
                 case PARSING:
                     performParsing(queryCtx);
                     if (queryCtx.getCandidateQueries().isEmpty()) {
@@ -68,10 +82,18 @@ public class ChatWorkflowEngine {
                         }
                     }
                     break;
+                    // 修正 检查语义查询语句的有效性，并在必要时通过基于规则和基于LLM的机制执行更正。
+                //    com.tencent.supersonic.headless.chat.corrector.RuleSqlCorrector,\
+                //    com.tencent.supersonic.headless.chat.corrector.LLMSqlCorrector
                 case S2SQL_CORRECTING:
                     performCorrecting(queryCtx);
                     queryCtx.setChatWorkflowState(ChatWorkflowState.TRANSLATING);
                     break;
+                    // 通过 S2SemanticLayerService 生成 SQL  将语义查询语句（S2SQL）转换为可针对物理数据模型运行的可执行SQL。
+                // 1. 解决模型关系和连接
+                // 2. 为指标应用适当的聚合
+                // 3. 处理过滤器和约束
+                // 4. 实现基于时间的比较
                 case TRANSLATING:
                     long start = System.currentTimeMillis();
                     performTranslating(queryCtx, parseResult);

@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuerySqlReq extends SemanticQueryReq {
-
+    // s2sql
     private String sql;
     private Integer limit = 1000;
 

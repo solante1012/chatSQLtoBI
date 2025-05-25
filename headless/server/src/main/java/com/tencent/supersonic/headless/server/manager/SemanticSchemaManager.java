@@ -32,6 +32,7 @@ public class SemanticSchemaManager {
         this.schemaService = schemaService;
     }
 
+    // 从语义 （semantic schemas）模式构建 拓扑结构
     public Ontology buildOntology(SemanticSchemaResp semanticSchemaResp) {
         Ontology ontology = new Ontology();
         Map<String, List<MetricSchemaResp>> model2Metrics = Maps.newHashMap();

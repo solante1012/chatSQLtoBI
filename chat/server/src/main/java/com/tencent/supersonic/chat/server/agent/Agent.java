@@ -31,7 +31,9 @@ public class Agent extends RecordInfo {
     /** 0 offline, 1 online */
     private Integer status = ONLINE_STATUS;
     private List<String> examples;
+    // 开启输入联想
     private Integer enableSearch = ENABLED;
+    // 开启用户确认
     private Integer enableFeedback = DISABLED;
     private String toolConfig;
     private Map<String, ChatApp> chatAppConfig = Collections.emptyMap();

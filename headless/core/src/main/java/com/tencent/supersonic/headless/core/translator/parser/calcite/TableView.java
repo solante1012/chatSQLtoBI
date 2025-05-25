@@ -15,15 +15,30 @@ import java.util.Set;
 
 @Data
 public class TableView {
-
+        // 维度 或者 指标 字段
     private Set<String> fields = Sets.newHashSet();
-    private List<SqlNode> select = Lists.newArrayList();
+    /**
+     0 = {SqlIdentifier@24062} "src1_ai_target_yg_date.target_name"
+     1 = {SqlIdentifier@24063} "src1_ai_target_yg_date.target_value"
+     2 = {SqlIdentifier@24064} "src1_ai_target_yg_date.account_period"
+     3 = {SqlIdentifier@24065} "src1_ai_org.org_byname"
+     */
+    private List<SqlNode> select = Lists.newArrayList(); // 抽象语法树 select节点
     private SqlNodeList order;
     private SqlNode fetch;
     private SqlNode offset;
-    private SqlNode table;
-    private String alias;
-    private List<String> primary;
+    /**
+     * SELECT *
+     * FROM (SELECT *
+     * FROM `ai_target_rc_date`) AS `src1_ai_target_rc_date`
+     * LEFT JOIN (SELECT *
+     * FROM `ai_org`) AS `src1_ai_org` ON `src1_ai_target_rc_date`.`org_id` = `src1_ai_org`.`org_id`
+     * LEFT JOIN (SELECT *
+     * FROM `ai_target_yg_date`) AS `src1_ai_target_yg_date` ON `src1_ai_org`.`org_id` = `src1_ai_target_yg_date`.`org_id`
+     */
+    private SqlNode table; // 抽象语法树 表节点
+    private String alias;  // 表别名
+    private List<String> primary; // 主/外建
     private ModelResp dataModel;
 
     public SqlNode build() {

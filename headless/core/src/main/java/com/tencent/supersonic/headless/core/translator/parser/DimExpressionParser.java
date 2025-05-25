@@ -19,6 +19,7 @@ import java.util.Set;
 
 /**
  * This parser replaces dimension bizName in the S2SQL with calculation expression (if configured).
+ * 计算维度字段 含有表达式的情况
  */
 @Component("DimExpressionParser")
 @Slf4j

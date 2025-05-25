@@ -91,6 +91,7 @@ public class S2SemanticLayerService implements SemanticLayerService {
     @S2DataPermission
     @Override
     public SemanticTranslateResp translate(SemanticQueryReq queryReq, User user) throws Exception {
+        //
         QueryStatement queryStatement = buildQueryStatement(queryReq, user);
         semanticTranslator.translate(queryStatement);
         return SemanticTranslateResp.builder().querySQL(queryStatement.getSql())
@@ -279,7 +280,7 @@ public class S2SemanticLayerService implements SemanticLayerService {
     public List<MetricResp> getMetrics(MetaFilter metaFilter) {
         return metricService.getMetrics(metaFilter);
     }
-
+    // 从 s2sql 语义模型 构造 拓扑结构
     private QueryStatement buildQueryStatement(SemanticQueryReq semanticQueryReq, User user) {
         QueryStatement queryStatement = null;
         if (semanticQueryReq instanceof QuerySqlReq) {

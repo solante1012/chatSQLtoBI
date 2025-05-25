@@ -121,7 +121,7 @@ public class QueryStructUtils {
                 .map(DimensionResp::getModelId).collect(Collectors.toList()));
         return modelIds;
     }
-
+    // 从sql 中获取相关的 指标
     private List<MetricResp> getMetricsFromSql(QuerySqlReq querySqlReq,
             SemanticSchemaResp semanticSchemaResp) {
         Set<String> resNameSet = getResName(querySqlReq);
@@ -163,10 +163,12 @@ public class QueryStructUtils {
         return identifiers.stream().anyMatch(identifier -> resNameSet.contains(identifier.getName())
                 || resNameSet.contains(identifier.getBizName()));
     }
-
+    // 从sql 中获取相关的 维度
     private List<DimensionResp> getDimensionsFromSql(QuerySqlReq querySqlReq,
             SemanticSchemaResp semanticSchemaResp) {
+        // 根据 sql 拿到相关的select 字段
         Set<String> resNameSet = getResName(querySqlReq);
+        // 过滤出匹配的维度
         if (semanticSchemaResp != null) {
             return semanticSchemaResp.getDimensions().stream().filter(
                     m -> resNameSet.contains(m.getName()) || resNameSet.contains(m.getBizName()))

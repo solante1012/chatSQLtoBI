@@ -14,13 +14,15 @@ public class QueryStatement {
     private String sql;
     private String errMsg;
     private StructQuery structQuery;
-    private SqlQuery sqlQuery;
+    private SqlQuery sqlQuery; // s2sql or s2sql(bizName)
     private OntologyQuery ontologyQuery;
     private QueryState status = QueryState.SUCCESS;
     private Boolean isS2SQL = false;
     private Boolean enableOptimize = true;
     private Triple<String, String, String> minMaxTime;
+    // s2sql 语义模型 对应的 拓扑结构
     private Ontology ontology;
+    // 包含连接关系的schema
     private SemanticSchemaResp semanticSchema;
     private Integer limit = 1000;
     private Boolean isTranslated = false;

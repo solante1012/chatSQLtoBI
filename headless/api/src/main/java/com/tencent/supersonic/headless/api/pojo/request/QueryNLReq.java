@@ -25,6 +25,7 @@ public class QueryNLReq extends SemanticQueryReq implements Serializable {
     private QueryFilters queryFilters;
     private boolean saveAnswer = true;
     private Text2SQLType text2SQLType = Text2SQLType.LLM_OR_RULE;
+    // 模型映射 模式
     private MapModeEnum mapModeEnum = MapModeEnum.STRICT;
     private QueryDataType queryDataType = QueryDataType.ALL;
     private Map<String, ChatApp> chatAppConfig;

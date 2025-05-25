@@ -18,6 +18,7 @@ public class ModelSchemaResp extends ModelResp {
 
     private List<MetricSchemaResp> metrics;
     private List<DimSchemaResp> dimensions;
+    // 关联模型  字段
     private List<ModelRela> modelRelas;
 
     public Set<Long> getModelClusterSet() {

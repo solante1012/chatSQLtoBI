@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class SemanticSchema implements Serializable {
 
+    // 语义模型 DataSetSchema 最终  要转换为 Ontology
     private final List<DataSetSchema> dataSetSchemaList;
 
     public SemanticSchema(List<DataSetSchema> dataSetSchemaList) {

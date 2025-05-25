@@ -75,6 +75,7 @@ public class OnePassSCSqlGenStrategy extends SqlGenStrategy {
         // 2.generate sql generation prompt for each self-consistency inference
         ChatApp chatApp = llmReq.getChatAppConfig().get(APP_KEY);
         ChatLanguageModel chatLanguageModel = getChatLanguageModel(chatApp.getChatModelConfig());
+        // 调用 langchain4j 根据规定的接口返回
         SemanticSqlExtractor extractor =
                 AiServices.create(SemanticSqlExtractor.class, chatLanguageModel);
 
@@ -88,13 +89,14 @@ public class OnePassSCSqlGenStrategy extends SqlGenStrategy {
         // 3.perform multiple self-consistency inferences parallelly
         Map<String, Prompt> output2Prompt = new ConcurrentHashMap<>();
         prompt2Exemplar.keySet().parallelStream().forEach(prompt -> {
+            // 生成 S2SQL  根据  OnePassSCSqlGenStrategy
             SemanticSql s2Sql = extractor.generateSemanticSql(prompt.toUserMessage().singleText());
             output2Prompt.put(s2Sql.getSql(), prompt);
             keyPipelineLog.info("OnePassSCSqlGenStrategy modelReq:\n{} \nmodelResp:\n{}",
                     prompt.text(), s2Sql);
         });
 
-        // 4.format response.
+        // 4.format response.  投票最大值
         Pair<String, Map<String, Double>> sqlMapPair =
                 ResponseHelper.selfConsistencyVote(Lists.newArrayList(output2Prompt.keySet()));
         llmResp.setSqlOutput(sqlMapPair.getLeft());

@@ -9,6 +9,12 @@ import java.io.Serializable;
 @ToString
 public abstract class MapResult implements Serializable {
 
+    /**
+     *
+     * @param name   匹配到的词 文本
+     * @param detectWord  拿来匹配的 字符串
+     *              offset  出现的位置
+     */
     protected String name;
     protected int offset;
 

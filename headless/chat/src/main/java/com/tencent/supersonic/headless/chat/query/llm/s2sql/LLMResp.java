@@ -15,7 +15,7 @@ public class LLMResp {
     private String dataSet;
 
     private String schema;
-
+// S2sql 语义模型
     private String sqlOutput;
 
     private List<String> fields;

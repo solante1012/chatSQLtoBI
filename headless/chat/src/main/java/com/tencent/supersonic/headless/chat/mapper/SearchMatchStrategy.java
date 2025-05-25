@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SearchMatchStrategy encapsulates a concrete matching algorithm executed during search process.
+ * 封装了执行过程中具体匹配算法
  */
 @Service
 public class SearchMatchStrategy extends BaseMatchStrategy<HanlpMapResult> {
@@ -35,7 +36,7 @@ public class SearchMatchStrategy extends BaseMatchStrategy<HanlpMapResult> {
             List<S2Term> originals, Set<Long> detectDataSetIds) {
         String text = chatQueryContext.getRequest().getQueryText();
         Map<Integer, Integer> regOffsetToLength = mapperHelper.getRegOffsetToLength(originals);
-
+        // 按分词器步长索引列表遍历
         List<Integer> detectIndexList = Lists.newArrayList();
 
         for (Integer index = 0; index < text.length();) {

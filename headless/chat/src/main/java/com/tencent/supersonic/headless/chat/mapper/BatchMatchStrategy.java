@@ -36,6 +36,7 @@ public abstract class BatchMatchStrategy<T extends MapResult> extends BaseMatchS
             String detectSegment = text.substring(startIndex, endIndex).trim();
             detectSegments.add(detectSegment);
         }
+        // 分割文本，根据检索数据集ID，批量进行向量召回
         return detectByBatch(chatQueryContext, detectDataSetIds, detectSegments);
     }
 

@@ -36,6 +36,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.hankcs.hanlp.utility.Predefine.logger;
 
+/**
+ * 自定义词典
+ */
 public class MultiCustomDictionary extends DynamicCustomDictionary {
 
     public static int MAX_SIZE = 10;

@@ -94,12 +94,12 @@ const LoginPage: React.FC = () => {
                 <h3 className={styles.title}>
                   <Space>
                     <S2Icon
-                      icon={ICON.iconlogobiaoshi}
+                      icon={ICON.iconliantong}
                       size={30}
                       color="#296DF3"
                       style={{ display: 'inline-block', marginTop: 8 }}
                     />
-                    <div>SuperSonic</div>
+                    <div>联通西安创新研究院</div>
                   </Space>
                 </h3>
                 <Item name="name" rules={[{ required: true }]} label="">

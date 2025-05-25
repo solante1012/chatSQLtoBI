@@ -31,6 +31,7 @@ public class HanlpDictMatchStrategy extends SingleMatchStrategy<HanlpMapResult> 
 
     public List<HanlpMapResult> detectByStep(ChatQueryContext chatQueryContext,
             Set<Long> detectDataSetIds, String detectSegment, int offset) {
+        // 前后缀匹配
         // step1. pre search
         Integer oneDetectionMaxSize =
                 Integer.valueOf(mapperConfig.getParameterValue(MAPPER_DETECTION_MAX_SIZE));

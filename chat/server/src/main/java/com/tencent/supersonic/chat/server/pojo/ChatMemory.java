@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.Date;
 
+// 记忆对象
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,12 +19,15 @@ public class ChatMemory {
 
     private Long queryId;
 
+    // 用户问题
     private String question;
 
     private String sideInfo;
 
+    // Schema映射
     private String dbSchema;
 
+    // 语义S2SQL
     private String s2sql;
 
     private MemoryStatus status;

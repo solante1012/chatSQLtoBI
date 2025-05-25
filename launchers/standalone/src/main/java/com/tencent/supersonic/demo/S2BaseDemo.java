@@ -140,6 +140,7 @@ public abstract class S2BaseDemo implements CommandLineRunner {
     }
 
     protected ChatModel addChatModelIfNotExist() {
+        // 从用户设置拿到chatModel
         List<ChatModel> chatModels = chatModelService.getChatModels(defaultUser);
         if (!chatModels.isEmpty()) {
             return chatModels.get(0);
@@ -204,6 +205,10 @@ public abstract class S2BaseDemo implements CommandLineRunner {
         chatManageService.updateFeedback(queryId, 5, "");
     }
 
+    /**
+     * 初始化分词器字典
+     * @param dimension
+     */
     protected void enableDimensionValue(DimensionResp dimension) {
         dictConfService.addDictConf(DictItemReq.builder().type(TypeEnums.DIMENSION)
                 .itemId(dimension.getId()).status(StatusEnum.ONLINE).build(), defaultUser);

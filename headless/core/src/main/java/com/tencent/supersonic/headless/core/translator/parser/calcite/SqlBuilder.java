@@ -59,7 +59,9 @@ public class SqlBuilder {
         }
 
         TableView tableView;
+        // 模型数量大于1 而且 有关联关系
         if (!CollectionUtils.isEmpty(ontology.getJoinRelations()) && dataModels.size() > 1) {
+            // 获取给定模型中可能有关联的模型
             Set<ModelResp> models = probeRelatedModels(dataModels, queryStatement.getOntology());
             tableView = render(ontologyQuery, models, scope, schema);
         } else {
@@ -81,7 +83,9 @@ public class SqlBuilder {
 
     private Set<ModelResp> probeRelatedModels(Set<ModelResp> dataModels, Ontology ontology) {
         List<JoinRelation> joinRelations = ontology.getJoinRelations();
+        // 构建图
         Graph<String, DefaultEdge> graph = buildGraph(joinRelations);
+        // 获取最短路径
         DijkstraShortestPath<String, DefaultEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
         Set<String> queryModels =
                 dataModels.stream().map(ModelResp::getName).collect(Collectors.toSet());
@@ -159,8 +163,8 @@ public class SqlBuilder {
         SqlNode left = null;
         TableView leftTable = null;
         TableView outerTable = new TableView();
-        Map<String, SqlNode> outerSelect = new HashMap<>();
-        Map<String, String> beforeModels = new HashMap<>();
+        Map<String, SqlNode> outerSelect = new HashMap<>();  //  target_name -> src1_ai_target_rc_date.target_name | org_byname -> {SqlIdentifier@20638} "src1_ai_org.org_byname"
+        Map<String, String> beforeModels = new HashMap<>();  //  ai_target_rc_date -> src1_ai_target_rc_date
         EngineType engineType = EngineType.fromString(schema.getOntology().getDatabase().getType());
 
         for (ModelResp dataModel : dataModels) {
@@ -173,7 +177,7 @@ public class SqlBuilder {
             for (Identify identify : dataModel.getIdentifiers()) {
                 primary.add(identify.getName());
             }
-
+            // 循环1个模型的 ，分析 维度、指标
             TableView tableView =
                     renderOne(queryMetrics, queryDimensions, dataModel, scope, schema);
             log.info("tableView {}", StringUtils.normalizeSpace(tableView.getTable().toString()));
@@ -329,6 +333,7 @@ public class SqlBuilder {
             S2CalciteSchema schema) {
         TableView tableView = new TableView();
         EngineType engineType = EngineType.fromString(schema.getOntology().getDatabase().getType());
+        // 遍历维度 指标
         Set<String> queryFields = tableView.getFields();
         if (Objects.nonNull(queryMetrics)) {
             queryMetrics.stream().forEach(m -> queryFields.addAll(m.getFields()));
@@ -336,11 +341,12 @@ public class SqlBuilder {
         if (Objects.nonNull(queryDimensions)) {
             queryDimensions.stream().forEach(d -> queryFields.addAll(d.getFields()));
         }
-
+// 根据表达式 校验、创建 SQL 抽象语法树节点（字段）
         try {
             for (String field : queryFields) {
                 tableView.getSelect().add(SemanticNode.parse(field, scope, engineType));
             }
+            // 根据 模型sql表达式 校验、创建 SQL 抽象语法树节点（表）
             tableView.setTable(DataModelNode.build(dataModel, scope));
         } catch (Exception e) {
             log.error("Failed to create sqlNode for data model {}", dataModel);

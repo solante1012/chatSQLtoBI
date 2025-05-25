@@ -1,4 +1,6 @@
-prefer-workspace-packages: true
 packages:
-  - 'packages/*'
-  - 'apps/*'
+  - packages/*
+  - apps/*
+overrides:
+  supersonic-chat-sdk: link:packages/chat-sdk
+prefer-workspace-packages: true

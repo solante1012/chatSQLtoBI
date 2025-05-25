@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 /**
  * * A mapper that recognizes schema elements with keyword. It leverages two matching strategies:
- * HanlpDictMatchStrategy and DatabaseMatchStrategy.
+ *   HanlpDictMatchStrategy （基于本地词典（HanLP）分词器进行关键词匹配）and DatabaseMatchStrategy （从数据库中查找最相似的 schema 元素）.
  */
 @Slf4j
 public class KeywordMapper extends BaseMapper {
@@ -78,6 +78,7 @@ public class KeywordMapper extends BaseMapper {
                 if (elementID == null) {
                     continue;
                 }
+                // 转换为语义元素对象
                 SchemaElement element = getSchemaElement(dataSetId, elementType, elementID,
                         chatQueryContext.getSemanticSchema());
                 if (Objects.isNull(element)) {

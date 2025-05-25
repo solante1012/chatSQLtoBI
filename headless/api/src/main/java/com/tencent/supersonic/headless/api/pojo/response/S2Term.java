@@ -6,10 +6,11 @@ import lombok.Data;
 
 @Data
 public class S2Term {
-
+    // 分词器 分词
     public String word;
-
+    // 分词器 词性
     public Nature nature;
+    // 在文本中的起始位置（需开启分词器的offset选项）
     public int offset;
     public int frequency = 0;
 

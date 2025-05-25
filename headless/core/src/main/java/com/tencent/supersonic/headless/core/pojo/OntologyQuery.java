@@ -17,13 +17,15 @@ import java.util.stream.Collectors;
 /**
  * An ontology query comprises metrics/dimensions that are relevant to the semantic query. Note that
  * metrics/dimensions in the ontology query must be a subset of an ontology.
+ * 注意: ontology query中的指标/维度必须是一个子集
+ * 从 ontology  s2sql 匹配问题字段 转换为  OntologyQuery
  */
 @Data
 public class OntologyQuery {
 
     private Map<String, ModelResp> modelMap = Maps.newHashMap();
-    private Map<String, Set<MetricSchemaResp>> metricMap = Maps.newHashMap();
-    private Map<String, Set<DimSchemaResp>> dimensionMap = Maps.newHashMap();
+    private Map<String, Set<MetricSchemaResp>> metricMap = Maps.newHashMap(); // modelName -> metricName
+    private Map<String, Set<DimSchemaResp>> dimensionMap = Maps.newHashMap(); // modelName -> dimensionName
     private Set<String> fields = Sets.newHashSet();
     private Long limit;
     private List<ColumnOrder> order;

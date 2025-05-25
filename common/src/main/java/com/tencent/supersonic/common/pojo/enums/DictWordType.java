@@ -4,7 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
-/** * nature type such as : metric、dimension etc. */
+/** *  词性类型
+ *  从用户侧的数据类型转换而来，用于自定义词典，分词器查找词性
+ * 与TypeEnums: METRIC, DIMENSION, TAG, DATASET,         MODEL, UNKNOWN ，DOMAIN,
+ *  nature type such as : metric、dimension etc. */
 public enum DictWordType {
     METRIC("metric"),
 

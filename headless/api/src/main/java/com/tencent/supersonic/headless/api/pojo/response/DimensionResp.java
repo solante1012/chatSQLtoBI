@@ -20,7 +20,7 @@ public class DimensionResp extends SchemaItem {
 
     private Long domainId;
 
-    private DimensionType type;
+    private DimensionType type; // categorical, time, partition_time, primary_key, foreign_key;
 
     private String expr;
 

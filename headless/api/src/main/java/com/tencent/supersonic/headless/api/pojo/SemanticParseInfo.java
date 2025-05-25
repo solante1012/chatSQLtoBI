@@ -26,11 +26,11 @@ import static com.tencent.supersonic.common.pojo.Constants.DEFAULT_METRIC_LIMIT;
 public class SemanticParseInfo implements Serializable {
 
     private Integer id;
-    private String queryMode = "";
+    private String queryMode = ""; // LLM_S2SQL
     private QueryConfig queryConfig;
-    private QueryType queryType;
+    private QueryType queryType;  // 聚合 / 明细
 
-    private SchemaElement dataSet;
+    private SchemaElement dataSet; // 数据集 （语义元素）
     private Set<SchemaElement> metrics = Sets.newTreeSet(new SchemaNameLengthComparator());
     private Set<SchemaElement> dimensions = Sets.newTreeSet(new SchemaNameLengthComparator());
 

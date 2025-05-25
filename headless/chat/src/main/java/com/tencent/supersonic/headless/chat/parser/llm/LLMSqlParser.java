@@ -18,6 +18,7 @@ import java.util.Objects;
 /**
  * LLMSqlParser uses large language model to understand query semantics and generate S2SQL
  * statements to be executed by the semantic query engine.
+ * 大模型 将 查询语义理解并生成 S2SQL 语句，该语句将由语义查询引擎执行。
  */
 @Slf4j
 public class LLMSqlParser implements SemanticParser {

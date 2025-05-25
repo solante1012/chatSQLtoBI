@@ -71,11 +71,15 @@ public abstract class SemanticNode {
         AGGREGATION_FUNC.add("avg");
         AGGREGATION_FUNC.add("min");
     }
-
+    // 根据表达式 校验、创建 SQL 抽象语法树节点
+    // expression 可以是字段
     public static SqlNode parse(String expression, SqlValidatorScope scope, EngineType engineType)
             throws Exception {
+        // com.tencent.supersonic.headless.core.translator.parser.calcite.SchemaBuilder.getScope
         SqlValidatorWithHints sqlValidatorWithHints = Configuration.getSqlValidatorWithHints(
                 scope.getValidator().getCatalogReader().getRootSchema(), engineType);
+        //的作用是获取当前数据库引擎的保留关键字和普通关键字集合，用于 SQL 语义校验或语法分析时判断某个标识符是否为关键字，
+        // 从而决定是否需要进行转义处理。
         if (Configuration.getSqlAdvisor(sqlValidatorWithHints, engineType).getReservedAndKeyWords()
                 .contains(expression.toUpperCase())) {
             if (engineType == EngineType.HANADB || engineType == EngineType.PRESTO
@@ -91,7 +95,7 @@ public abstract class SemanticNode {
         scope.validateExpr(sqlNode);
         return sqlNode;
     }
-
+    // 创建 SQL 抽象语法树节点 AS 节点
     public static SqlNode buildAs(String asName, SqlNode sqlNode) throws Exception {
         SqlAsOperator sqlAsOperator = new SqlAsOperator();
         SqlIdentifier sqlIdentifier = new SqlIdentifier(asName, SqlParserPos.ZERO);

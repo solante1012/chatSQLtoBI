@@ -43,8 +43,9 @@ public class SqlQueryParser implements QueryParser {
 
     @Override
     public void parse(QueryStatement queryStatement) throws Exception {
-        // build ontologyQuery
+        // S2Sql build ontologyQuery
         SqlQuery sqlQuery = queryStatement.getSqlQuery();
+        // TODO 使用set 接受field 遇到模型有相同的字段被丢弃
         List<String> queryFields = SqlSelectHelper.getAllSelectFields(sqlQuery.getSql());
         Set<String> queryAliases = SqlSelectHelper.getAliasFields(sqlQuery.getSql());
         Set<String> ontologyMetricsDimensions = Collections.synchronizedSet(new HashSet<String>());
@@ -52,6 +53,7 @@ public class SqlQueryParser implements QueryParser {
                 Collections.synchronizedSet(new HashSet<>());
         queryFields.removeAll(queryAliases);
         Ontology ontology = queryStatement.getOntology();
+        // 从 ontology  s2sql 匹配字段 转换为  OntologyQuery
         OntologyQuery ontologyQuery = buildOntologyQuery(ontology, queryFields);
         Set<String> queryFieldsSet = new HashSet<>(queryFields);
         ontologyQuery.getMetrics().forEach(m -> {
@@ -62,7 +64,7 @@ public class SqlQueryParser implements QueryParser {
             ontologyMetricsDimensions.add(d.getName());
             ontologyBizNameMetricsDimensions.add(d.getBizName());
         });
-        // check if there are fields not matched with any metric or dimension
+        // check if there are fields not matched with any metric or dimension  检查有没有遗漏的字段
 
         if (!(queryFieldsSet.containsAll(ontologyMetricsDimensions)
                 || queryFieldsSet.containsAll(ontologyBizNameMetricsDimensions))) {
@@ -77,10 +79,10 @@ public class SqlQueryParser implements QueryParser {
             return;
         }
         queryStatement.setOntologyQuery(ontologyQuery);
-
+        // 从指标中拿到聚合类型
         AggOption sqlQueryAggOption = getAggOption(sqlQuery.getSql(), ontologyQuery.getMetrics());
         ontologyQuery.setAggOption(sqlQueryAggOption);
-
+        // 将 s2sql 中的 name  转换成 bizName
         convertNameToBizName(queryStatement);
         // Solve the problem of SQL execution error when alias is Chinese
         aliasesWithBackticks(queryStatement);
@@ -195,6 +197,7 @@ public class SqlQueryParser implements QueryParser {
 
     private OntologyQuery buildOntologyQuery(Ontology ontology, List<String> queryFields) {
         OntologyQuery ontologyQuery = new OntologyQuery();
+        // TODO 如果多个模型有相同名称的字段，需要考虑包含，不应该不算，目前不支持
         Set<String> fields = Sets.newHashSet(queryFields);
 
         // find belonging model for every querying metrics
@@ -232,6 +235,7 @@ public class SqlQueryParser implements QueryParser {
         // second, try to find a model that has all the remaining fields, such that no further join
         // is needed.
         if (!fields.isEmpty()) {
+            // <模型名， S2SQL 中涉及的字段 匹配上的维度集合>
             Map<String, Set<DimSchemaResp>> model2dims = new HashMap<>();
             ontology.getDimensionMap().entrySet().forEach(entry -> {
                 String modelName = entry.getKey();

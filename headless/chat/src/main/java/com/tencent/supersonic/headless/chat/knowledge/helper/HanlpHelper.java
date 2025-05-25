@@ -35,7 +35,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/** HanLP helper */
+/** HanLP helper
+ * HanLP 是一个由 hankcs 开发的 Java 中文自然语言处理库
+ * 支持中文分词、命名实体识别、依存句法分析等功能
+ * 使用场景：语义解析前的分词、实体提取、关键词抽取等
+ * */
 @Slf4j
 public class HanlpHelper {
 
@@ -187,6 +191,7 @@ public class HanlpHelper {
 
     public static boolean addToCustomDictionary(DictWord dictWord) {
         log.debug("dictWord:{}", dictWord);
+        // 自定义词典 insert
         return getDynamicCustomDictionary().insert(dictWord.getWord(),
                 dictWord.getNatureWithFrequency());
     }
@@ -295,6 +300,7 @@ public class HanlpHelper {
         return isAdd;
     }
 
+    // 根据模型数据集ID ，分词转换 核心方法
     public static List<S2Term> getTerms(String text, Map<Long, List<Long>> modelIdToDataSetIds) {
         return getSegment().seg(text.toLowerCase()).stream()
                 .filter(term -> term.getNature().startsWith(DictWordType.NATURE_SPILT))
@@ -302,6 +308,7 @@ public class HanlpHelper {
                 .flatMap(Collection::stream).collect(Collectors.toList());
     }
 
+    //  只过滤出在数据集中的 分词
     public static List<S2Term> getTerms(List<S2Term> terms, Set<Long> dataSetIds) {
         logTerms(terms);
         if (!CollectionUtils.isEmpty(dataSetIds)) {

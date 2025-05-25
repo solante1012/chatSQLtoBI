@@ -16,6 +16,7 @@ import org.springframework.util.CollectionUtils;
 @Slf4j
 public class SchemaDictUpdateListener {
 
+    // 核心类 添加分词器字典元素
     @Async("eventExecutor")
     @EventListener
     public void onApplicationEvent(DataEvent dataEvent) {

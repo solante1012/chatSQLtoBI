@@ -13,15 +13,16 @@ import java.util.stream.Collectors;
 /**
  * An ontology comprises a group of data models that can be joined together either in star schema or
  * snowflake schema.
+ * 一个 Ontology 是由一组数据模型组成的，这些模型可以通过 星型模式（star schema） 或 雪花模式（snowflake schema） 联合在一起。
  */
 @Data
 public class Ontology {
 
     private DatabaseResp database;
     private Map<String, ModelResp> modelMap = new HashMap<>();
-    private Map<String, List<MetricSchemaResp>> metricMap = new HashMap<>();
-    private Map<String, List<DimSchemaResp>> dimensionMap = new HashMap<>();
-    private List<JoinRelation> joinRelations;
+    private Map<String, List<MetricSchemaResp>> metricMap = new HashMap<>(); // key 为模型名，value 为该模型下的指标列表
+    private Map<String, List<DimSchemaResp>> dimensionMap = new HashMap<>(); // ，key 为模型名，value 为该模型下的维度列表
+    private List<JoinRelation> joinRelations;  // 表之间的关联关系，定义如何 join 模型
 
     public List<MetricSchemaResp> getMetrics() {
         return metricMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());

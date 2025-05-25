@@ -6,12 +6,24 @@
        url('iconfont.svg?t=1659425018463#iconfont') format('svg');
 }
 
+@font-face {
+  font-family: "iconfont2"; /* Project id 4924869 */
+  src: url('iconfont2.woff2?t=1747619369213') format('woff2'),
+       url('iconfont2.woff?t=1747619369213') format('woff'),
+       url('iconfont2.ttf?t=1747619369213') format('truetype');
+}
+
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.iconliantong:before {
+  font-family: "iconfont2" !important;
+  content: "\e8b5";
 }
 
 .iconbaobiaokanban:before {

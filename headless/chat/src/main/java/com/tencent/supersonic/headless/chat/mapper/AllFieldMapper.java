@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 所有的 SchemaElement 都匹配
+ */
 @Slf4j
 public class AllFieldMapper extends BaseMapper {
 

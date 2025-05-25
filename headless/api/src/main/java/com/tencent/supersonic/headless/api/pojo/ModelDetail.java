@@ -19,17 +19,17 @@ public class ModelDetail {
     private String queryType;
 
     private String dbType;
-
+ // 模型定义的sql  select * from ai_target_rc_date
     private String sqlQuery;
 
     private String tableQuery;
 
     private String filterSql;
-
+        //  字段 （唯一标识 或 外键）
     private List<Identify> identifiers = Lists.newArrayList();
-
+        // 对数据进行分类或过滤的属性（例如，日期、部门、页面）
     private List<Dimension> dimensions = Lists.newArrayList();
-
+        // 可以聚合的数值（例如，页面浏览量、停留时间）
     private List<Measure> measures = Lists.newArrayList();
 
     private List<Field> fields = Lists.newArrayList();

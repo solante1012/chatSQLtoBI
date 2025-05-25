@@ -28,6 +28,8 @@ public class ModelProvider {
     }
 
     public static ChatLanguageModel getChatModel(ChatModelConfig modelConfig) {
+        // 如果没有设置模型 使用langchain4j的demo APIkey
+        // https://docs.langchain4j.dev/integrations/language-models/open-ai#api-key
         if (modelConfig == null || StringUtils.isBlank(modelConfig.getProvider())
                 || StringUtils.isBlank(modelConfig.getBaseUrl())) {
             modelConfig = DEMO_CHAT_MODEL;
