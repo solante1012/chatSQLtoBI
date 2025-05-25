@@ -138,7 +138,7 @@ public class SqlQueryParser implements QueryParser {
             return AggOption.OUTER;
         }
         long defaultAggNullCnt = metricSchemas.stream().filter(
-                m -> Objects.isNull(m.getDefaultAgg()) || StringUtils.isBlank(m.getDefaultAgg()))
+                        m -> Objects.isNull(m.getDefaultAgg()) || StringUtils.isBlank(m.getDefaultAgg()))
                 .count();
         if (defaultAggNullCnt > 0) {
             log.debug("getAggOption find null defaultAgg metric set to NATIVE");
@@ -150,11 +150,11 @@ public class SqlQueryParser implements QueryParser {
     private Map<String, String> getNameToBizNameMap(OntologyQuery query) {
         // support fieldName and field alias to bizName
         Map<String, String> dimensionResults = query.getDimensions().stream().flatMap(
-                entry -> getPairStream(entry.getAlias(), entry.getName(), entry.getBizName()))
+                        entry -> getPairStream(entry.getAlias(), entry.getName(), entry.getBizName()))
                 .collect(Collectors.toMap(Pair::getLeft, Pair::getRight, (k1, k2) -> k1));
 
         Map<String, String> metricResults = query.getMetrics().stream().flatMap(
-                entry -> getPairStream(entry.getAlias(), entry.getName(), entry.getBizName()))
+                        entry -> getPairStream(entry.getAlias(), entry.getName(), entry.getBizName()))
                 .collect(Collectors.toMap(Pair::getLeft, Pair::getRight, (k1, k2) -> k1));
 
         dimensionResults.putAll(metricResults);
@@ -162,7 +162,7 @@ public class SqlQueryParser implements QueryParser {
     }
 
     private Stream<Pair<String, String>> getPairStream(String aliasStr, String name,
-            String bizName) {
+                                                       String bizName) {
         Set<Pair<String, String>> elements = new HashSet<>();
         elements.add(Pair.of(name, bizName));
         if (StringUtils.isNotBlank(aliasStr)) {
@@ -201,17 +201,22 @@ public class SqlQueryParser implements QueryParser {
         OntologyQuery ontologyQuery = new OntologyQuery();
         // TODO 如果多个模型有相同名称的字段，需要考虑包含，不应该不算，目前不支持
         Set<String> fields = Sets.newHashSet(queryFields);
+//        Set<String> fields = Sets.newHashSet(queryFields);
+        Map<String, Integer> fieldsAndCount = queryFields.stream()
+                .collect(Collectors.toMap(s -> s, s -> 0));
         // find belonging model for every querying metrics
         ontology.getMetricMap().entrySet().forEach(entry -> {
             String modelName = entry.getKey();
             entry.getValue().forEach(m -> {
-                if (fields.contains(m.getName()) || fields.contains(m.getBizName())) {
+                if (fieldsAndCount.containsKey(m.getName()) || fieldsAndCount.containsKey(m.getBizName())) {
                     ontologyQuery.getModelMap().put(modelName,
                             ontology.getModelMap().get(modelName));
                     ontologyQuery.getMetricMap().computeIfAbsent(modelName, k -> Sets.newHashSet())
                             .add(m);
-                    fields.remove(m.getName());
-                    fields.remove(m.getBizName());
+//                    fields.remove(m.getName());
+//                    fields.remove(m.getBizName());
+                    fieldsAndCount.computeIfPresent(m.getName(), (k, v) -> v + 1);
+                    fieldsAndCount.computeIfPresent(m.getBizName(), (k, v) -> v + 1);
                 }
             });
         });
@@ -222,55 +227,64 @@ public class SqlQueryParser implements QueryParser {
                 .forEach(entry -> {
                     String modelName = entry.getKey();
                     entry.getValue().forEach(d -> {
-                        if (fields.contains(d.getName()) || fields.contains(d.getBizName())) {
+                        if (fieldsAndCount.containsKey(d.getName()) || fieldsAndCount.containsKey(d.getBizName())) {
                             ontologyQuery.getModelMap().put(modelName,
                                     ontology.getModelMap().get(modelName));
                             ontologyQuery.getDimensionMap()
                                     .computeIfAbsent(modelName, k -> Sets.newHashSet()).add(d);
-                            fields.remove(d.getName());
-                            fields.remove(d.getBizName());
+//                            fields.remove(d.getName());
+//                            fields.remove(d.getBizName());
+                            fieldsAndCount.computeIfPresent(d.getName(), (k, v) -> v + 1);
+                            fieldsAndCount.computeIfPresent(d.getBizName(), (k, v) -> v + 1);
                         }
                     });
                 });
 
         // second, try to find a model that has all the remaining fields, such that no further join
         // is needed.
-        if (!fields.isEmpty()) {
-            // <模型名， S2SQL 中涉及的字段 匹配上的维度集合>
+        Map<String, Integer> fieldsRemain = fieldsAndCount.entrySet().stream().filter(entry -> entry.getValue() == 0)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (!fieldsRemain.isEmpty()) {
             Map<String, Set<DimSchemaResp>> model2dims = new HashMap<>();
             ontology.getDimensionMap().entrySet().forEach(entry -> {
                 String modelName = entry.getKey();
                 entry.getValue().forEach(d -> {
-                    if (fields.contains(d.getName()) || fields.contains(d.getBizName())) {
+                    if (fieldsRemain.containsKey(d.getName()) ||
+                            fieldsRemain.containsKey(d.getBizName())) {
                         model2dims.computeIfAbsent(modelName, k -> Sets.newHashSet()).add(d);
+                        fieldsRemain.computeIfPresent(d.getName(), (k, v) -> v + 1);
+                        fieldsRemain.computeIfPresent(d.getBizName(), (k, v) -> v + 1);
                     }
                 });
             });
             Optional<Map.Entry<String, Set<DimSchemaResp>>> modelEntry = model2dims.entrySet()
-                    .stream().filter(entry -> entry.getValue().size() == fields.size()).findFirst();
+                    .stream().filter(entry -> entry.getValue().size() == fieldsRemain.size()).findFirst();
             if (modelEntry.isPresent()) {
                 ontologyQuery.getDimensionMap().put(modelEntry.get().getKey(),
                         modelEntry.get().getValue());
                 ontologyQuery.getModelMap().put(modelEntry.get().getKey(),
                         ontology.getModelMap().get(modelEntry.get().getKey()));
-                fields.clear();
+//                fieldsRemain.clear();
+
             }
         }
 
         // finally if there are still fields not found belonging models, try to find in the models
         // iteratively
-        if (!fields.isEmpty()) {
+        Map<String, Integer> fieldsRemain1 = fieldsRemain.entrySet().stream().filter(entry -> entry.getValue() == 0)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (!fieldsRemain1.isEmpty()) {
             ontology.getDimensionMap().entrySet().forEach(entry -> {
                 String modelName = entry.getKey();
                 if (!ontologyQuery.getDimensionMap().containsKey(modelName)) {
                     entry.getValue().forEach(d -> {
-                        if (fields.contains(d.getName()) || fields.contains(d.getBizName())) {
+                        if (fieldsRemain1.containsKey(d.getName()) || fieldsRemain1.containsKey(d.getBizName())) {
                             ontologyQuery.getModelMap().put(modelName,
                                     ontology.getModelMap().get(modelName));
                             ontologyQuery.getDimensionMap()
                                     .computeIfAbsent(modelName, k -> Sets.newHashSet()).add(d);
-                            fields.remove(d.getName());
-                            fields.remove(d.getBizName());
+//                            fields.remove(d.getName());
+//                            fields.remove(d.getBizName());
                         }
                     });
                 }
