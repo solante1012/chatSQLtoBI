@@ -11,10 +11,10 @@ public class QueryStatement {
 
     private Long dataSetId;
     private String dataSetName;
-    private String sql;
+    private String sql;  // final sql
     private String errMsg;
     private StructQuery structQuery;
-    private SqlQuery sqlQuery; // s2sql or s2sql(bizName)
+    private SqlQuery sqlQuery; // s2sql or s2sql(bizName)  outersql
     private OntologyQuery ontologyQuery;
     private QueryState status = QueryState.SUCCESS;
     private Boolean isS2SQL = false;

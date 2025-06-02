@@ -81,4 +81,10 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteUser(long userId) {
         userDOMapper.deleteById(userId);
     }
+
+    @Override
+    public UserDO getUserByAuthId(Long userId) {
+        return userDOMapper.selectOne(new QueryWrapper<UserDO>()
+                .lambda().eq(UserDO::getAuthUserId, userId));
+    }
 }

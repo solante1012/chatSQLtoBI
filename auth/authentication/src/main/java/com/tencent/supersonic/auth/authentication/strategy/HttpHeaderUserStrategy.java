@@ -2,11 +2,17 @@ package com.tencent.supersonic.auth.authentication.strategy;
 
 import com.tencent.supersonic.auth.api.authentication.constant.UserConstants;
 import com.tencent.supersonic.auth.api.authentication.service.UserStrategy;
+import com.tencent.supersonic.auth.authentication.persistence.dataobject.UserDO;
+import com.tencent.supersonic.auth.authentication.persistence.repository.UserRepository;
+import com.tencent.supersonic.auth.authentication.sso.core.LoginUser;
+import com.tencent.supersonic.auth.authentication.sso.core.util.SecurityUtils;
 import com.tencent.supersonic.auth.authentication.utils.TokenService;
 import com.tencent.supersonic.common.pojo.User;
+import com.tencent.supersonic.common.util.ContextUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,11 +49,20 @@ public class HttpHeaderUserStrategy implements UserStrategy {
 
     public User getUser(HttpServletRequest request) {
         final Optional<Claims> claimsOptional = tokenService.getClaims(request);
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (claimsOptional.isEmpty() && loginUser != null) {
+            return Optional.ofNullable(loginUser.getUser()).orElse(User.getVisitUser());
+        }
         return claimsOptional.map(this::getUser).orElse(User.getVisitUser());
     }
 
     public User getUser(String token, String appKey) {
+        // 先从应用自身token找， 找不到从单点登录的上下文找
         final Optional<Claims> claimsOptional = tokenService.getClaims(token, appKey);
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (claimsOptional.isEmpty() && loginUser != null) {
+            return Optional.ofNullable(loginUser.getUser()).orElse(User.getVisitUser());
+        }
         return claimsOptional.map(this::getUser).orElse(User.getVisitUser());
     }
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
 
@@ -33,6 +34,7 @@ public class UserDO {
 
     private Timestamp lastLogin;
 
+    private Long authUserId;
     /** @param name */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();

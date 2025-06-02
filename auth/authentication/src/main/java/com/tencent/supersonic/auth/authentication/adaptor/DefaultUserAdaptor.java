@@ -10,6 +10,8 @@ import com.tencent.supersonic.auth.api.authentication.request.UserReq;
 import com.tencent.supersonic.auth.authentication.persistence.dataobject.UserDO;
 import com.tencent.supersonic.auth.authentication.persistence.dataobject.UserTokenDO;
 import com.tencent.supersonic.auth.authentication.persistence.repository.UserRepository;
+import com.tencent.supersonic.auth.authentication.sso.core.LoginUser;
+import com.tencent.supersonic.auth.authentication.sso.core.util.SecurityUtils;
 import com.tencent.supersonic.auth.authentication.utils.TokenService;
 import com.tencent.supersonic.common.pojo.User;
 import com.tencent.supersonic.common.util.AESEncryptionUtil;
@@ -247,6 +249,8 @@ public class DefaultUserAdaptor implements UserAdaptor {
                 .map(this::convertUserToken).collect(Collectors.toList());
         return userTokens;
     }
+
+
 
     private UserTokenDO saveUserToken(String tokenName, String userName, String token,
             long expireTime) {

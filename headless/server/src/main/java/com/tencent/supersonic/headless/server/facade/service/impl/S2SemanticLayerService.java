@@ -280,7 +280,7 @@ public class S2SemanticLayerService implements SemanticLayerService {
     public List<MetricResp> getMetrics(MetaFilter metaFilter) {
         return metricService.getMetrics(metaFilter);
     }
-    // 从 s2sql 语义模型 构造 拓扑结构
+    // 从 s2sql 语义模型 构造QueryStatement : ontology \semanticSchema
     private QueryStatement buildQueryStatement(SemanticQueryReq semanticQueryReq, User user) {
         QueryStatement queryStatement = null;
         if (semanticQueryReq instanceof QuerySqlReq) {

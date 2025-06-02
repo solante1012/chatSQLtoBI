@@ -349,7 +349,7 @@ public class SqlBuilder {
             for (String field : queryFields) {
                 tableView.getSelect().add(SemanticNode.parse(field, scope, engineType));
             }
-            // 根据 模型sql表达式 校验、创建 SQL 抽象语法树节点（表）
+            // 根据 模型定义时的 sql表达式 校验、创建 SQL 抽象语法树节点（表）
             tableView.setTable(DataModelNode.build(dataModel, scope));
         } catch (Exception e) {
             log.error("Failed to create sqlNode for data model {}", dataModel);

@@ -95,7 +95,7 @@ public class ChatQueryServiceImpl implements ChatQueryService {
         }
         // 上下文中包含了请求、返回、agent
         ParseContext parseContext = buildParseContext(chatParseReq, new ChatParseResp(queryId));
-        // 通过 SPI 插件获取解析器 NL2PluginParser NL2SQLParser  PlainTextParser
+        // 通过 SPI 插件获取解析器 NL2PluginParser（除数据集 以外的三方插件） NL2SQLParser  PlainTextParser （没有任何插件）
         for (ChatQueryParser parser : chatQueryParsers) {
             if (parser.accept(parseContext)) {
                 parser.parse(parseContext);

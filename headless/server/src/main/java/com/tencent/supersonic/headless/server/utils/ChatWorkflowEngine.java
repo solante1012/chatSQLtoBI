@@ -62,8 +62,8 @@ public class ChatWorkflowEngine {
                     // 解析 理解用户查询并生成语义查询语句（S2SQL）
                 // 基于映射的模式元素和查询意图，系统生成结构化语义查询表示（S2SQL）。
 //                com.tencent.supersonic.headless.chat.parser.llm.LLMSqlParser,\
-//                com.tencent.supersonic.headless.chat.parser.rule.RuleSqlParser,\
-//                com.tencent.supersonic.headless.chat.parser.QueryTypeParser
+//                com.tencent.supersonic.headless.chat.parser.rule.RuleSqlParser,（时间、聚合 函数转换）\
+//                com.tencent.supersonic.headless.chat.parser.QueryTypeParser （判断时 聚合类型 还是 明细）
                 case PARSING:
                     performParsing(queryCtx);
                     if (queryCtx.getCandidateQueries().isEmpty()) {
@@ -83,7 +83,7 @@ public class ChatWorkflowEngine {
                     }
                     break;
                     // 修正 检查语义查询语句的有效性，并在必要时通过基于规则和基于LLM的机制执行更正。
-                //    com.tencent.supersonic.headless.chat.corrector.RuleSqlCorrector,\
+                //    com.tencent.supersonic.headless.chat.corrector.RuleSqlCorrector,\ (默认配置 ：不开启)
                 //    com.tencent.supersonic.headless.chat.corrector.LLMSqlCorrector
                 case S2SQL_CORRECTING:
                     performCorrecting(queryCtx);

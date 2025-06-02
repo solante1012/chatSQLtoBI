@@ -547,3 +547,5 @@ CREATE TABLE IF NOT EXISTS `s2_user_token` (
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  comment='用户令牌信息表';
 
 
+alter table s2_user
+    add auth_user_id bigint null comment '单点登录用户中心id映射';

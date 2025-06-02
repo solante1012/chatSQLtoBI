@@ -26,4 +26,6 @@ public interface UserRepository {
     void deleteUserToken(Long tokenId);
 
     void deleteUser(long userId);
+
+    UserDO getUserByAuthId(Long userId);
 }

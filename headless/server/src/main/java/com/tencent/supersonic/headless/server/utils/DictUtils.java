@@ -230,7 +230,7 @@ public class DictUtils {
 
     private QuerySqlReq constructTagQueryReq(DictItemResp dictItemResp) {
 
-        String sqlPattern = "select %s, %s from tbl %s group by %s order by %s desc limit %d";
+        String sqlPattern = "select `%s`, %s from tbl %s group by `%s` order by %s desc limit %d";
         String bizName = dictItemResp.getBizName();
         String whereStr = generateWhereStr(dictItemResp);
         String where = StringUtils.isEmpty(whereStr) ? "" : "WHERE" + whereStr;

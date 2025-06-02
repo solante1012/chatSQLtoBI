@@ -96,7 +96,7 @@ public class TokenService {
                             .build().parseClaimsJws(getTokenString(token)).getBody();
             return Optional.of(claims);
         } catch (Exception e) {
-            log.info("can not getClaims from appKey:{} token:{}, please login", appKey, token);
+            log.info("can not getClaims from appKey:{} token:{}, maybe sso login", appKey, token);
         }
         return Optional.empty();
     }

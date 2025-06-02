@@ -21,14 +21,14 @@ import java.util.Set;
 
 import static com.tencent.supersonic.common.pojo.Constants.DEFAULT_DETAIL_LIMIT;
 import static com.tencent.supersonic.common.pojo.Constants.DEFAULT_METRIC_LIMIT;
-
+// SemanticParseInfo(映射 和 s2sql ) --> SemanticQueryReq (translate )
 @Data
 public class SemanticParseInfo implements Serializable {
 
     private Integer id;
     private String queryMode = ""; // LLM_S2SQL
     private QueryConfig queryConfig;
-    private QueryType queryType;  // 聚合 / 明细
+    private QueryType queryType;  // 聚合 / 明细  QueryTypeParser
 
     private SchemaElement dataSet; // 数据集 （语义元素）
     private Set<SchemaElement> metrics = Sets.newTreeSet(new SchemaNameLengthComparator());
@@ -38,12 +38,12 @@ public class SemanticParseInfo implements Serializable {
     private Set<QueryFilter> metricFilters = Sets.newHashSet();
     private FilterType filterType = FilterType.AND;
 
-    private AggregateTypeEnum aggType = AggregateTypeEnum.NONE;
+    private AggregateTypeEnum aggType = AggregateTypeEnum.NONE; // 从语义提取聚合类型 （AggregateTypeParser）
     private Set<Order> orders = Sets.newHashSet();
     private long limit = DEFAULT_DETAIL_LIMIT;
     private double score;
     private List<SchemaElementMatch> elementMatches = Lists.newArrayList();
-    private DateConf dateInfo;
+    private DateConf dateInfo;  // 从语义提取的时间信息 （TimeRangeParser）
     private SqlInfo sqlInfo = new SqlInfo();
     private String textInfo;
     private SqlEvaluation sqlEvaluation = new SqlEvaluation();
