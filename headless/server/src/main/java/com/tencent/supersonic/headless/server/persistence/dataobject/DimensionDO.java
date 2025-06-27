@@ -27,7 +27,7 @@ public class DimensionDO {
 
     private Integer sensitiveLevel;
 
-    private String type;
+    private String type;   // categorical / time / partition_time / primary_key / foreign_key
 
     private Date createdAt;
 
@@ -37,7 +37,7 @@ public class DimensionDO {
 
     private String updatedBy;
 
-    private String semanticType;
+    private String semanticType;  // date / category
 
     private String alias;
 
@@ -54,5 +54,5 @@ public class DimensionDO {
     @TableField(exist = false)
     private int isTag;
 
-    private String ext;
+    private String ext; // {"time_format":"yyyy-MM-dd"}  {"time_format":"yyyy"}
 }
